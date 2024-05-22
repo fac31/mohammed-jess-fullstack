@@ -1,0 +1,147 @@
+.home-container {
+  height: 100vh;
+  overflow: hidden;
+  background: var(--pink);
+}
+
+.slogan-text {
+  font-family: var(--title);
+  color: white;
+  font-size: 1.5rem;
+  margin: 2rem;
+  text-align: center;
+}
+
+.action-btn {
+  all: unset;
+  font-family: var(--title);
+  background: white;
+  color: var(--green);
+  padding: 1rem 2rem;
+  border-radius: 16px;
+  transition: transform 0.3s, font-size 0.3s;
+}
+
+.home-section {
+  height: 100%;
+}
+
+.green-section {
+  background: var(--green);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-section {
+  height: 0vh;
+}
+
+.pink-section {
+  background: var(--pink);
+  height: 28vh;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  font-family: var(--title);
+  z-index: 1;
+}
+
+.home-header {
+  font-size: 6rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.wave {
+  position: absolute;
+  z-index: 10;
+}
+
+.wave-section-top {
+  height: 32vh;
+  background-color: var(--green);
+  position: relative;
+}
+
+.wave-section-top::before {
+  content: "";
+  width: 100%;
+  height: 42px;
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  background-size: auto;
+  background-repeat: repeat no-repeat;
+  background-position: 52vw bottom;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1200  134' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M0 98L50 92C100 86 200 74 300 50C400 26 500 -10 600 2C700 14 800 74 900 98C1000 122 1100 110 1150 104L1200 98V134H1150C1100 134 1000 134 900 134C800 134 700 134 600 134C500 134 400 134 300 134C200 134 100 134 50 134H0V98Z' fill='%23efc7c2'/></svg>");
+}
+
+.wave-section-btm {
+  height: 6vh;
+  background-color: var(--pink);
+  position: relative;
+  color: #fff1d0;
+  font-size: 12rem;
+}
+
+.wave-section-btm::before {
+  content: "";
+  z-index: 50;
+  width: 100%;
+  height: 42px;
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  background-size: auto;
+  background-repeat: repeat no-repeat;
+  background-position: 52vw bottom;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1200  134' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M0 98L50 92C100 86 200 74 300 50C400 26 500 -10 600 2C700 14 800 74 900 98C1000 122 1100 110 1150 104L1200 98V134H1150C1100 134 1000 134 900 134C800 134 700 134 600 134C500 134 400 134 300 134C200 134 100 134 50 134H0V98Z' fill='%23becebc'/></svg>");
+}
+
+@media (min-width: 800px) {
+  .pink-section {
+    height: 28vh;
+  }
+
+  .home-header {
+    font-size: 12rem;
+  }
+
+  .slogan-text {
+    font-size: 2rem;
+  }
+
+  .action-btn:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+    font-size: 1.2rem;
+  }
+}
+
+.pink-section-transform {
+  transform: translateY(-20vh);
+  transition: transform 2s;
+}
+
+.form-section-transform {
+  height: 64vh;
+  transition: height 2s;
+}
+
+.green-section-transform {
+  transform: translateY(10vh);
+  transition: transform 2s;
+}
+
+.wave-section-top-transform {
+  transform: translateY(-20vh);
+  transition: transform 2s;
+}
+
+.wave-section-btm-transform {
+  transform: translateY(10vh);
+  transition: transform 2s;
+}
