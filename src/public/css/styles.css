@@ -1,3 +1,18 @@
-h1 {
-  color: red;
+body {
+  margin: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  position: relative;
+}
+
+:root {
+  --pink: #efc7c2;
+  --green: #becebc;
+  --title: "Poetsen One";
+  --body: "Open Sans";
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
