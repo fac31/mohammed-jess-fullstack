@@ -1,0 +1,229 @@
+nav {
+  height: 6rem;
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+.home-icon {
+  font-size: 2rem;
+  color: var(--pink);
+}
+
+.nav-profile-btn {
+  all: unset;
+  font-family: var(--title);
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  color: white;
+  background: var(--pink);
+  border-radius: 16px;
+}
+
+.event-main-header {
+  font-family: var(--title);
+  font-size: 3rem;
+  color: var(--green);
+  text-align: center;
+}
+
+.event-search-container {
+  width: 90%;
+  max-width: 48rem;
+  height: 36rem;
+  margin: 0 auto;
+  border: 2px dashed var(--pink);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  transition: height 1s ease-out;
+}
+
+.event-search-container-shrink {
+  height: 8rem;
+  transition: height 1s ease-out;
+}
+
+.event-search-text-hidden {
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+.event-search-form-hidden {
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+.event-search-text {
+  margin-bottom: 2rem;
+  transition: opacity 0.3s ease-out;
+
+  p {
+    margin-bottom: 0.5rem;
+    margin-top: 0rem;
+  }
+}
+
+.event-search-form {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  row-gap: 2rem;
+  width: 100%;
+  max-width: 32rem;
+  transition: opacity 0.3s ease-out;
+  label {
+    justify-self: start;
+    align-self: end;
+    font-weight: bold;
+    padding-bottom: 0.5rem;
+  }
+  input {
+    all: unset;
+    border-bottom: 1px solid black;
+  }
+}
+
+.event-form-btn,
+.event-search-again-btn {
+  all: unset;
+  font-family: var(--title);
+  color: white;
+  background: var(--pink);
+  border-radius: 16px;
+  padding: 0.5rem 1rem;
+  justify-self: end;
+  margin-top: 1rem;
+}
+
+.event-form-btn {
+  width: 4rem;
+}
+
+.event-search-again-btn {
+  width: 8rem;
+}
+
+.event-form-btn-random {
+  justify-self: start;
+  opacity: 0;
+}
+
+.section-container {
+  padding: 2rem;
+}
+
+.section-header {
+  color: var(--green);
+  font-family: var(--title);
+  font-size: 2rem;
+}
+
+.music-results-container {
+  display: flex;
+  gap: 2rem;
+  overflow-x: auto;
+}
+
+.music-card {
+  height: 16rem;
+  width: 16rem;
+  min-width: 16rem;
+  flex: 0 0 auto;
+  background: var(--lightest-green);
+  border-radius: 16px;
+  position: relative;
+  box-shadow: 0px 18px 36px -18px rgba(0, 0, 0, 0.1),
+    0px 30px 45px -30px rgba(50, 50, 93, 0.25);
+}
+
+.music-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 6rem;
+  gap: 2rem;
+}
+
+.music-card-header {
+  font-family: var(--title);
+  margin-top: 2rem;
+  margin-bottom: 0;
+  padding: 0 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--green);
+}
+
+.music-card-img {
+  height: 6rem;
+  width: 6rem;
+  border-top-left-radius: 16px;
+}
+
+.card-btn-container {
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.card-btn {
+  all: unset;
+  font-family: var(--title);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 16px;
+}
+
+.card-btn-add {
+  background: var(--green);
+}
+
+.card-btn-view {
+  background: var(--mid-green);
+}
+
+@media (min-width: 800px) {
+  nav {
+    padding: 0 2rem;
+  }
+
+  .event-main-header {
+    font-family: var(--title);
+    font-size: 4rem;
+    margin-top: 1rem;
+  }
+
+  .event-search-container {
+    height: 28rem;
+    transition: height 1s ease-out;
+  }
+
+  .event-search-container-shrink {
+    height: 8rem;
+    transition: height 1s ease-out;
+  }
+
+  .event-search-again-btn:hover,
+  .event-form-btn-search:hover,
+  .card-btn:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: transform 0.3s, font-size 0.3s;
+  }
+}

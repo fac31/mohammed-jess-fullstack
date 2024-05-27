@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poetsen+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/event.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="./js/event.js" type="module" defer></script>
+    <title>Fullstack</title>
+  </head>
+  <body>
+    <div>
+      <nav>
+        <i class="fa-solid fa-house home-icon"></i>
+        <button class="nav-profile-btn">profile</button>
+      </nav>
+      <h1 class="event-main-header">curate your event...</h1>
+      <div class="event-search-container">
+        <div>
+          <button type="button" class="event-search-again-btn hidden">search again</button>
+        </div>
+        <div class="event-search-text">
+          <p><strong>Let’s get started!</strong></p>
+          <p>Discover playlists from Spotify to soundtrack your event.</p>
+          <p>Search delicious recipes to rediscover old favourites or find new inspiration.</p>
+          <p>And explore refreshing drink options to complete your perfect gathering.</p>
+        </div>
+        <form class="event-search-form" action="/search" method="POST">
+          <label for="music">music</label>
+          <input type="text" name="music" id="music" autocomplete="false" />
+          <label for="food">food</label>
+          <input type="text" name="food" id="food" autocomplete="false" />
+          <label for="drinks">drinks</label>
+          <input type="text" name="drinks" id="drinks" autocomplete="false" />
+          <button class="event-form-btn event-form-btn-random">random!</button>
+          <button type="button" class="event-form-btn event-form-btn-search">search!</button>
+        </form>
+      </div>
+      <div class="music-container section-container hidden">
+        <h2 class="section-header">music</h2>
+        <div class="music-results-container"></div>
+      </div>
+    </div>
+  </body>
+</html>

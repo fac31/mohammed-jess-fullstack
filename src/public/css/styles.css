@@ -3,11 +3,16 @@ body {
   box-sizing: border-box;
   overflow-x: hidden;
   position: relative;
+  font-family: var(--body);
 }
 
 :root {
   --pink: #efc7c2;
   --green: #becebc;
+  --mid-green: rgba(190, 206, 188, 0.75);
+  --light-green: rgba(190, 206, 188, 0.15);
+  --lighter-green: rgba(190, 206, 188, 0.1);
+  --lightest-green: rgba(190, 206, 188, 0.05);
   --title: "Poetsen One";
   --body: "Open Sans";
 }
@@ -15,4 +20,21 @@ body {
 a {
   text-decoration: none;
   color: inherit;
+}
+
+.hidden {
+  display: none;
+}
+
+.fade-in {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s ease-out, visibility 1s ease-out;
+  transition-delay: 1s;
+}
+
+.visible {
+  display: block;
+  opacity: 1;
+  visibility: visible;
 }
