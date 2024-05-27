@@ -196,6 +196,13 @@ nav {
   background: var(--mid-green);
 }
 
+.song-container {
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
 @media (min-width: 800px) {
   nav {
     padding: 0 2rem;
@@ -218,8 +225,7 @@ nav {
   }
 
   .event-search-again-btn:hover,
-  .event-form-btn-search:hover,
-  .card-btn:hover {
+  .event-form-btn-search:hover {
     cursor: pointer;
     transform: scale(1.1);
     cursor: pointer;

@@ -1,4 +1,4 @@
-import { outputResults } from "./utils.js"
+import { handlePlaylistsSearch } from "./event-music.js"
 const eventSearchBtn = document.querySelector(".event-form-btn-search")
 const eventSearchAgainBtn = document.querySelector(".event-search-again-btn")
 const eventForm = document.querySelector(".event-search-form")
@@ -8,6 +8,7 @@ const eventSearchText = document.querySelector(".event-search-text")
 eventSearchBtn.addEventListener("click", eventSearch)
 eventSearchAgainBtn.addEventListener("click", expandSearchBox)
 
+// HIDE AND EXPAND SEARCH BOX
 function hideSearchBox() {
   eventSearchContainer.classList.add("event-search-container-shrink")
   eventForm.classList.add("event-search-form-hidden")
@@ -30,6 +31,7 @@ function expandSearchBox() {
   }, 1000)
 }
 
+// SEARCH ALL
 function eventSearch(e) {
   e.preventDefault()
   const formData = {}
@@ -41,8 +43,6 @@ function eventSearch(e) {
       formData[element.name] = element.value
     }
   }
-
-  console.log("Form data:", formData)
 
   fetch("/search", {
     method: "POST",
@@ -63,6 +63,7 @@ function eventSearch(e) {
   handlePlaylistsSearch(formData.music)
 }
 
+// GET TOKENS
 document.addEventListener("DOMContentLoaded", async () => {
   const response = await fetch("/get-spotify-token")
   const data = await response.json()
@@ -73,38 +74,3 @@ document.addEventListener("DOMContentLoaded", async () => {
     localStorage.setItem("access_token", accessToken)
   }
 })
-
-async function handlePlaylistsSearch(searchWord) {
-  const playlists = await getPlaylists(searchWord)
-  if (searchWord) localStorage.setItem("musicSearchWord", searchWord)
-  outputResults("music", playlists)
-}
-
-async function getPlaylists(searchWord) {
-  const accessToken = localStorage.getItem("access_token")
-
-  if (!accessToken) {
-    console.error("No access token found in local storage")
-    return []
-  }
-  try {
-    const response = await fetch("/get-playlists", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ searchWord }),
-    })
-
-    if (!response.ok) {
-      console.error("Failed to fetch playlists:", response.statusText)
-      return []
-    }
-
-    const data = await response.json()
-    return data.playlists
-  } catch (error) {
-    console.error("Error fetching playlists:", error)
-    return []
-  }
-}

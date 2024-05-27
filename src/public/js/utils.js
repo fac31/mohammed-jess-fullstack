@@ -1,3 +1,5 @@
+import { addPlaylistToEvent, viewPlaylistDetails } from "./event-music.js"
+
 export function outputResults(category, details) {
   const container = document.querySelector(`.${category}-container`)
   const resultsContainer = document.querySelector(
@@ -55,6 +57,13 @@ function createCard(category, card) {
   addButton.classList.add("card-btn-add")
   viewButton.classList.add("card-btn")
   viewButton.classList.add("card-btn-view")
+
+  if (category === "music") {
+    addButton.addEventListener("click", addPlaylistToEvent)
+    viewButton.addEventListener("click", () =>
+      viewPlaylistDetails(card.name, card.id)
+    )
+  }
 
   return cardContainer
 }

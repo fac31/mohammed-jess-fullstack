@@ -10,9 +10,9 @@ body {
   --pink: #efc7c2;
   --green: #becebc;
   --mid-green: rgba(190, 206, 188, 0.75);
-  --light-green: rgba(190, 206, 188, 0.15);
-  --lighter-green: rgba(190, 206, 188, 0.1);
-  --lightest-green: rgba(190, 206, 188, 0.05);
+  --light-green: rgba(190, 206, 188, 0.2);
+  --lighter-green: rgba(190, 206, 188, 0.15);
+  --lightest-green: rgba(190, 206, 188, 0.1);
   --title: "Poetsen One";
   --body: "Open Sans";
 }
@@ -37,4 +37,71 @@ a {
   display: block;
   opacity: 1;
   visibility: visible;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.75);
+  opacity: 0;
+  animation: backdrop-fade-in 200ms ease-in forwards;
+}
+
+.modal {
+  position: fixed;
+  width: 22rem;
+  height: 28rem;
+  top: 50%;
+  left: 50%;
+  margin-top: -15rem;
+  margin-left: -11rem;
+  background-color: #f9f9f9;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  z-index: 30;
+  animation: slide-down 500ms ease-out forwards;
+  animation-delay: 200ms;
+  /* -ms-overflow-style: none; */
+  scrollbar-width: none;
+  box-sizing: border-box;
+  opacity: 0;
+  transform: translateY(-3rem);
+  overflow: scroll;
+}
+
+.modal::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 600px) {
+  .modal {
+    width: 40rem;
+    height: 32rem;
+    margin-top: -16rem;
+    margin-left: -20rem;
+  }
+}
+
+@keyframes backdrop-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-8rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
