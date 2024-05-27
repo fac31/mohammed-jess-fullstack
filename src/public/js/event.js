@@ -1,9 +1,16 @@
 import { handlePlaylistsSearch } from "./event-music.js"
+import { displaySaved } from "./utils.js"
 const eventSearchBtn = document.querySelector(".event-form-btn-search")
 const eventSearchAgainBtn = document.querySelector(".event-search-again-btn")
 const eventForm = document.querySelector(".event-search-form")
 const eventSearchContainer = document.querySelector(".event-search-container")
 const eventSearchText = document.querySelector(".event-search-text")
+const viewEventContainer = document.querySelector(".view-event-container")
+const viewEventBtnContainer = document.querySelector(
+  ".view-event-btn-container"
+)
+const viewEventBtn = document.querySelector(".view-event-btn")
+const viewEventBtnClose = document.querySelector(".view-event-btn-close")
 
 eventSearchBtn.addEventListener("click", eventSearch)
 eventSearchAgainBtn.addEventListener("click", expandSearchBox)
@@ -18,6 +25,9 @@ function hideSearchBox() {
     eventSearchAgainBtn.classList.add("fade-in")
     eventSearchAgainBtn.classList.add("visible")
   }, 1000)
+  setTimeout(() => {
+    viewEventBtnContainer.classList.remove("hidden")
+  }, 1500)
 }
 
 function expandSearchBox() {
@@ -74,3 +84,27 @@ document.addEventListener("DOMContentLoaded", async () => {
     localStorage.setItem("access_token", accessToken)
   }
 })
+
+// VIEW EVENT
+viewEventBtn.addEventListener("click", openEvent)
+viewEventBtnClose.addEventListener("click", closeEvent)
+
+function openEvent() {
+  viewEventContainer.classList.remove("hidden")
+  viewEventContainer.classList.remove("slide-out-diagonal")
+
+  const storedMusic = localStorage.getItem("storedmusic")
+  const storedFood = localStorage.getItem("storedfood")
+  const storedDrinks = localStorage.getItem("storeddrinks")
+
+  if (storedMusic && storedMusic.length > 0) {
+    displaySaved("music", JSON.parse(storedMusic))
+  }
+}
+
+function closeEvent() {
+  viewEventContainer.classList.add("slide-out-diagonal")
+  setTimeout(() => {
+    viewEventContainer.classList.add("hidden")
+  }, 500)
+}

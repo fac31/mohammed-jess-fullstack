@@ -38,8 +38,18 @@ async function getPlaylists(searchWord) {
   }
 }
 
-export function addPlaylistToEvent(event) {
-  console.log("Add button clicked:", event.target)
+export function addPlaylistToStorage(playlistName) {
+  let storedMusic = JSON.parse(localStorage.getItem("storedmusic")) || []
+  if (!storedMusic.includes(playlistName)) {
+    storedMusic.push(playlistName)
+    localStorage.setItem("storedmusic", JSON.stringify(storedMusic))
+  }
+}
+
+export function removePlaylistFromStorage(playlistName) {
+  let storedMusic = JSON.parse(localStorage.getItem("storedmusic")) || []
+  storedMusic = storedMusic.filter((name) => name !== playlistName)
+  localStorage.setItem("storedmusic", JSON.stringify(storedMusic))
 }
 
 export async function viewPlaylistDetails(playlistName, playlistID) {

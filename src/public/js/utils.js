@@ -1,4 +1,8 @@
-import { addPlaylistToEvent, viewPlaylistDetails } from "./event-music.js"
+import {
+  addPlaylistToStorage,
+  removePlaylistFromStorage,
+  viewPlaylistDetails,
+} from "./event-music.js"
 
 export function outputResults(category, details) {
   const container = document.querySelector(`.${category}-container`)
@@ -31,8 +35,18 @@ function createCard(category, card) {
   const viewButton = document.createElement("button")
 
   cardHeader.textContent = card.name
-  addButton.textContent = "add"
+  // addButton.textContent = "add"
   viewButton.textContent = "more"
+
+  const storedItems =
+    JSON.parse(localStorage.getItem(`stored${category}`)) || []
+  const isStored = storedItems.some((name) => name === card.name)
+
+  if (isStored) {
+    addButton.textContent = "remove"
+  } else {
+    addButton.textContent = "add"
+  }
 
   const cardImg = document.createElement("img")
   if (card.images.length > 0) {
@@ -59,11 +73,29 @@ function createCard(category, card) {
   viewButton.classList.add("card-btn-view")
 
   if (category === "music") {
-    addButton.addEventListener("click", addPlaylistToEvent)
+    // addButton.addEventListener("click", () => addRemovePlaylist(card.name))
+    addButton.addEventListener("click", () => {
+      if (addButton.textContent === "add") {
+        addButton.textContent = "cut"
+        addPlaylistToStorage(card.name)
+      } else {
+        addButton.textContent = "add"
+        removePlaylistFromStorage(card.name)
+      }
+    })
     viewButton.addEventListener("click", () =>
       viewPlaylistDetails(card.name, card.id)
     )
   }
 
   return cardContainer
+}
+
+export function displaySaved(category, list) {
+  const listContainer = document.querySelector(`.${category}-list`)
+  list.forEach((item) => {
+    const listElement = document.createElement("li")
+    listElement.textContent = item
+    listContainer.appendChild(listElement)
+  })
 }

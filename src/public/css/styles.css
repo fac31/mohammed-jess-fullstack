@@ -22,6 +22,16 @@ a {
   color: inherit;
 }
 
+nav {
+  height: 6rem;
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
 .hidden {
   display: none;
 }
@@ -75,6 +85,12 @@ a {
 
 .modal::-webkit-scrollbar {
   display: none;
+}
+
+@media (min-width: 800px) {
+  nav {
+    padding: 0 2rem;
+  }
 }
 
 @media (min-width: 600px) {
