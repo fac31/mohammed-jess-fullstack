@@ -19,11 +19,11 @@
   },
   "homepage": "https://github.com/fac31/mohammed-jess-fullstack#readme",
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "mongodb": "^6.6.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.3.0",
-    "eslint": "^9.3.0",
     "globals": "^15.3.0",
     "nodemon": "^3.1.0"
   }

@@ -1,18 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Sulphur+Point:wght@300;400;700&display=swap');
+/*font-family: "Sulphur Point", sans-serif;*/
+
 body {
-  margin: 0;
-  box-sizing: border-box;
-  overflow-x: hidden;
-  position: relative;
+    margin: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    position: relative;
 }
 
 :root {
-  --pink: #efc7c2;
-  --green: #becebc;
-  --title: "Poetsen One";
-  --body: "Open Sans";
+    --pink: #efc7c2;
+    --green: #becebc;
+    --white: #ffffff;
+    --shade-color: #827984;
+    --title: 'Poetsen One';
+    --body: 'Open Sans';
+    --form-font: 'Sulphur Point', sans-serif;
 }
 
 a {
-  text-decoration: none;
-  color: inherit;
+    text-decoration: none;
+    color: inherit;
 }
