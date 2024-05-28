@@ -54,9 +54,7 @@
     margin-bottom: 2px;
 }
 
-.form-section input[type='text'],
-input[type='email'],
-input[type='password'] {
+.form-section input {
     box-sizing: border-box;
     outline: none;
     display: block;

@@ -1,13 +1,29 @@
-const MongoClient = require('mongodb').MongoClient
-const url = 'mongodb://localhost:27017/userDb'
+const mongoose = require('mongoose')
+const connect = mongoose.connect('mongodb://0.0.0.0:27017/login')
 
-MongoClient.connect(url, function (err, db) {
-    if (err) throw err
-    var dbo = db.db('mydb')
-    //Create a collection name "customers":
-    dbo.createCollection('customers', function (err, res) {
-        if (err) throw err
-        console.log('Collection created!')
-        db.close()
+connect
+    .then(() => {
+        console.log('DB Connected successfully')
     })
+    .catch(() => {
+        console.log('DB cannot be Connected')
+    })
+
+const loginSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        require: true,
+    },
+    email: {
+        type: String,
+        require: true,
+    },
+    password: {
+        type: String,
+        require: true,
+    },
 })
+
+const collection = new mongoose.model('user', loginSchema)
+
+module.exports = collection
