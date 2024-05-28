@@ -35,7 +35,6 @@ function createCard(category, card) {
   const viewButton = document.createElement("button")
 
   cardHeader.textContent = card.name
-  // addButton.textContent = "add"
   viewButton.textContent = "more"
 
   const storedItems =
@@ -67,13 +66,10 @@ function createCard(category, card) {
   cardHeader.classList.add(`${category}-card-header`)
   cardImg.classList.add(`${category}-card-img`)
   cardButtonContainer.classList.add("card-btn-container")
-  addButton.classList.add("card-btn")
-  addButton.classList.add("card-btn-add")
-  viewButton.classList.add("card-btn")
-  viewButton.classList.add("card-btn-view")
+  addButton.classList.add("card-btn", "btn", "card-btn-add")
+  viewButton.classList.add("card-btn", "btn", "card-btn-view")
 
   if (category === "music") {
-    // addButton.addEventListener("click", () => addRemovePlaylist(card.name))
     addButton.addEventListener("click", () => {
       if (addButton.textContent === "add") {
         addButton.textContent = "cut"

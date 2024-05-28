@@ -17,6 +17,10 @@ eventSearchAgainBtn.addEventListener("click", expandSearchBox)
 
 // HIDE AND EXPAND SEARCH BOX
 function hideSearchBox() {
+  const form = document.querySelector(".event-search-form")
+  const inputs = form.querySelectorAll('input[type="text"]')
+  inputs.forEach((input) => (input.value = ""))
+
   eventSearchContainer.classList.add("event-search-container-shrink")
   eventForm.classList.add("event-search-form-hidden")
   eventSearchText.classList.add("event-search-text-hidden")

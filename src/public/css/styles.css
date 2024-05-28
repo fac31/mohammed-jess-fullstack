@@ -32,6 +32,32 @@ nav {
   box-sizing: border-box;
 }
 
+.btn {
+  all: unset;
+  font-family: var(--title);
+  border-radius: 16px;
+  padding: 0.5rem 1rem;
+}
+
+.btn:hover {
+  cursor: pointer;
+}
+
+.home-icon {
+  font-size: 2rem;
+  color: var(--pink);
+}
+
+.nav-profile-btn {
+  /* all: unset;
+  font-family: var(--title); */
+  font-size: 1.5rem;
+  /* padding: 0.5rem 1rem; */
+  color: white;
+  background: var(--pink);
+  /* border-radius: 16px; */
+}
+
 .hidden {
   display: none;
 }
@@ -75,7 +101,6 @@ nav {
   z-index: 30;
   animation: slide-down 500ms ease-out forwards;
   animation-delay: 200ms;
-  /* -ms-overflow-style: none; */
   scrollbar-width: none;
   box-sizing: border-box;
   opacity: 0;
