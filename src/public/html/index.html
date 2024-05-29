@@ -1,30 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poetsen+One&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/index.css">
-    <script src="./js/index.js" defer></script>
-    <title>Fullstack</title>
-  </head>
-  <body>
-    <div class="home-container">
-      <div class="wave-section-top"></div>
-      <div class="home-section pink-section">
-        <h1 class="home-header">
-          curate
-        </h1>
-      </div>
-      <div class="form-section"></div>
-      <div class="wave-section-btm"></div>
-      <div class="home-section green-section">
-        <div class="slogan-text">Inspiration for every celebration</div>
-        <button class="start-btn action-btn">Get Started</button>
-      </div>
-    </div>
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poetsen+One&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="../css/styles.css" />
+        <link rel="stylesheet" href="../css/form.css" />
+        <link rel="stylesheet" href="../css/index.css" />
+        <script src="../js/index.js" defer></script>
+        <title>Curate</title>
+    </head>
+    <body>
+        <div class="home-container">
+            <div class="wave-section-top"></div>
+            <div class="home-section pink-section">
+                <h1 class="home-header">curate</h1>
+            </div>
+            <div class="hide-form-section form-section">
+                <div class="formLinks">
+                    <a href="#" class="link" id="show-login">Login</a>
+                    <a href="#" class="link" id="show-signup">SignUp</a>
+                </div>
+                <div class="login-message">
+                    <p>
+                        Sorry, we are unable to log you in. Please check that both your username and password are
+                        correct.
+                    </p>
+                </div>
+                <div class="login-form" id="login-form">
+                    <form action="/login" method="post">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="nameField" required />
+                        <label for="password">Password</label>
+                        <input type="password" name="password" required />
+                        <button id="form-btn" class="action-btn">Go!</button>
+                    </form>
+                </div>
+                <div id="signup-form" class="signup-form">
+                    <form action="/register" method="post">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="nameField" required />
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="emailField" required />
+                        <label for="password">Password</label>
+                        <input type="password" name="password" required />
+                        <button type="submit" id="form-btn" class="action-btn">Go!</button>
+                    </form>
+                </div>
+            </div>
+            <div class="wave-section-btm"></div>
+            <div class="home-section green-section">
+                <div class="slogan-text">Inspiration for every celebration</div>
+                <button class="start-btn action-btn">Get Started</button>
+            </div>
+        </div>
+    </body>
 </html>
