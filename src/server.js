@@ -14,9 +14,7 @@ app.use(express.static(path.join(__dirname, "public")))
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
-// M
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+
 
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, 'public/html/index.html'))
@@ -37,7 +35,6 @@ app.post('/register', async (req, res) => {
     } else {
         try {
             const userData = await collection.insertMany(data)
-            console.log(userData)
             res.send('User registered successfully!')
         } catch (error) {
             console.error(error)
@@ -56,7 +53,8 @@ app.post('/login', async (req, res) => {
         }
 
         if (check.password === req.body.password) {
-            res.send('Login successfully')
+            console.log('Login successfully')
+            res.sendFile(path.join(__dirname, 'public/html/event.html'))
         } else {
             res.send('Wrong password')
         }
