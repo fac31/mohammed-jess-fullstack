@@ -26,10 +26,16 @@
                     <a href="#" class="link" id="show-login">Login</a>
                     <a href="#" class="link" id="show-signup">SignUp</a>
                 </div>
+                <div class="login-message">
+                    <p>
+                        Sorry, we are unable to log you in. Please check that both your username and password are
+                        correct.
+                    </p>
+                </div>
                 <div class="login-form" id="login-form">
-                    <form>
-                        <label for="email">Email</label>
-                        <input type="email" name="email" id="emailField" required />
+                    <form action="/login" method="post">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="nameField" required />
                         <label for="password">Password</label>
                         <input type="password" name="password" required />
                         <button id="form-btn" class="action-btn">Go!</button>
