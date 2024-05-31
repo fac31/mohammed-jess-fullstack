@@ -1,4 +1,5 @@
 const startBtn = document.querySelector('.start-btn')
+const homeContainer = document.querySelector('.home-container')
 const pinkSection = document.querySelector('.pink-section')
 const formSection = document.querySelector('.form-section')
 const greenSection = document.querySelector('.green-section')
@@ -14,32 +15,34 @@ const links = document.querySelectorAll('.link')
 
 startBtn.addEventListener('click', transformPage)
 
+// Transform / expand homepage element on Get Started button click
 function transformPage() {
-    pinkSection.classList.add('pink-section-transform')
-    formSection.classList.add('form-section-transform')
-    greenSection.classList.add('green-section-transform')
-    waveSectionTop.classList.add('wave-section-top-transform')
-    waveSectionBtm.classList.add('wave-section-btm-transform')
-    formSection.classList.remove('hide-form-section')
-    showLoginLink.focus()
-    sloganTxt.classList.add('hideElement')
-    actionBtn.classList.add('hideElement')
+  homeContainer.classList.add('home-container-transform')
+  pinkSection.classList.add('pink-section-transform')
+  formSection.classList.add('form-section-transform')
+  greenSection.classList.add('green-section-transform')
+  waveSectionTop.classList.add('wave-section-top-transform')
+  waveSectionBtm.classList.add('wave-section-btm-transform')
+  formSection.classList.remove('hide-form-section')
+  showLoginLink.focus()
+  sloganTxt.classList.add('hidden')
+  actionBtn.classList.add('hidden')
 }
 
 //Toggle Login And signup form
 links.forEach((link) => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault() //preventing form submit
-        if (link.id === 'show-signup') {
-            loginForm.classList.add('hideElement')
-            signupForm.classList.remove('hideElement')
-        } else if (link.id === 'show-login') {
-            signupForm.classList.add('hideElement')
-            loginForm.classList.remove('hideElement')
-        }
-    })
+  link.addEventListener('click', (e) => {
+    e.preventDefault() //preventing form submit
+    if (link.id === 'show-signup') {
+      loginForm.classList.add('hidden')
+      signupForm.classList.remove('hidden')
+    } else if (link.id === 'show-login') {
+      signupForm.classList.add('hidden')
+      loginForm.classList.remove('hidden')
+    }
+  })
 })
 
 // Initially show the login form and hide the signup form
-loginForm.classList.remove('hideElement')
-signupForm.classList.add('hideElement')
+loginForm.classList.remove('hidden')
+signupForm.classList.add('hidden')
