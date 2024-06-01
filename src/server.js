@@ -1,8 +1,8 @@
-const express = require('express')
+const express = require("express")
 const app = express()
-const path = require('path')
-const bodyParser = require('body-parser')
-const collection = require('../src/public/js/db')
+const path = require("path")
+const bodyParser = require("body-parser")
+const collection = require("../src/public/js/db")
 const fetch = require("node-fetch")
 require("dotenv").config()
 const spotifyID = process.env.SPOTIFY_ID
@@ -14,53 +14,51 @@ app.use(express.static(path.join(__dirname, "public")))
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
-
-
-app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, 'public/html/index.html'))
+app.get("/", function (req, res) {
+  res.sendFile(path.join(__dirname, "public/html/index.html"))
 })
 
 //------------------------Register a user----------------------------------
-app.post('/register', async (req, res) => {
-    const data = {
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-    }
+app.post("/register", async (req, res) => {
+  const data = {
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
+  }
 
-    // Check if the username exists in the database
-    const existingUser = await collection.findOne({ name: data.name })
-    if (existingUser) {
-        res.send('User name already exists. Please choose a different name.')
-    } else {
-        try {
-            const userData = await collection.insertMany(data)
-            res.send('User registered successfully!')
-        } catch (error) {
-            console.error(error)
-            res.send('Error inserting data')
-        }
+  // Check if the username exists in the database
+  const existingUser = await collection.findOne({ name: data.name })
+  if (existingUser) {
+    res.send("User name already exists. Please choose a different name.")
+  } else {
+    try {
+      const userData = await collection.insertMany(data)
+      res.send("User registered successfully!")
+    } catch (error) {
+      console.error(error)
+      res.send("Error inserting data")
     }
+  }
 })
 //---------------------------------------------------------------------------
 //-----------------------------Login user------------------------------------
-app.post('/login', async (req, res) => {
-    try {
-        const check = await collection.findOne({ name: req.body.name })
+app.post("/login", async (req, res) => {
+  try {
+    const check = await collection.findOne({ email: req.body.email })
 
-        if (!check) {
-            return res.status(401).send('User not found')
-        }
-
-        if (check.password === req.body.password) {
-            console.log('Login successfully')
-            res.sendFile(path.join(__dirname, 'public/html/event.html'))
-        } else {
-            res.send('Wrong password')
-        }
-    } catch (error) {
-        res.send('Wrong details!')
+    if (!check) {
+      return res.status(401).send("User not found")
     }
+
+    if (check.password === req.body.password) {
+      console.log("Login successfully")
+      res.sendFile(path.join(__dirname, "public/html/event.html"))
+    } else {
+      res.send("Wrong password")
+    }
+  } catch (error) {
+    res.send("Wrong details!")
+  }
 })
 //---------------------------------------------------------------------------
 
@@ -85,9 +83,7 @@ const getSpotifyToken = async () => {
   const authOptions = {
     url: "https://accounts.spotify.com/api/token",
     headers: {
-      Authorization:
-        "Basic " +
-        new Buffer.from(spotify_id + ":" + spotify_secret).toString("base64"),
+      Authorization: "Basic " + new Buffer.from(spotify_id + ":" + spotify_secret).toString("base64"),
     },
     form: {
       grant_type: "client_credentials",
@@ -136,16 +132,11 @@ app.post("/get-playlists", async (req, res) => {
 
 const searchPlaylists = async (keyword, accessToken) => {
   try {
-    const response = await fetch(
-      `https://api.spotify.com/v1/search?q=${encodeURIComponent(
-        keyword
-      )}&type=playlist`,
-      {
-        headers: {
-          Authorization: "Bearer " + accessToken,
-        },
-      }
-    )
+    const response = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(keyword)}&type=playlist`, {
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+    })
 
     if (!response.ok) {
       console.error("Failed to search for playlists:", response.statusText)
@@ -165,14 +156,11 @@ app.post("/get-playlist-details", async (req, res) => {
   const token = await getSpotifyToken()
 
   try {
-    const response = await fetch(
-      `https://api.spotify.com/v1/playlists/${playlistID}/tracks`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
+    const response = await fetch(`https://api.spotify.com/v1/playlists/${playlistID}/tracks`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
 
     if (!response.ok) {
       console.error("Failed to fetch playlist details:", response.statusText)

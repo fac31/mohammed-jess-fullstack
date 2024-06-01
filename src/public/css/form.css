@@ -90,7 +90,7 @@
   padding: 0 14px;
 }
 
-#form-btn {
+.form-section button {
   background-color: var(--white);
   color: var(--pink);
   padding: 0.8rem 4rem;
