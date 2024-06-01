@@ -1,4 +1,5 @@
 import { handlePlaylistsSearch } from "./event-music.js"
+import { handleRecipeSearch } from "./event-food.js"
 import { displaySaved } from "./utils.js"
 const eventSearchBtn = document.querySelector(".event-form-btn-search")
 const eventSearchAgainBtn = document.querySelector(".event-search-again-btn")
@@ -6,11 +7,11 @@ const eventForm = document.querySelector(".event-search-form")
 const eventSearchContainer = document.querySelector(".event-search-container")
 const eventSearchText = document.querySelector(".event-search-text")
 const viewEventContainer = document.querySelector(".view-event-container")
-const viewEventBtnContainer = document.querySelector(
-  ".view-event-btn-container"
-)
+const viewEventBtnContainer = document.querySelector(".view-event-btn-container")
 const viewEventBtn = document.querySelector(".view-event-btn")
 const viewEventBtnClose = document.querySelector(".view-event-btn-close")
+const musicList = document.querySelector(".music-list")
+const foodList = document.querySelector(".food-list")
 
 eventSearchBtn.addEventListener("click", eventSearch)
 eventSearchAgainBtn.addEventListener("click", expandSearchBox)
@@ -75,6 +76,7 @@ function eventSearch(e) {
 
   hideSearchBox()
   handlePlaylistsSearch(formData.music)
+  handleRecipeSearch(formData.food)
 }
 
 // GET TOKENS
@@ -83,6 +85,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const data = await response.json()
   const accessToken = data.access_token
   localStorage.removeItem("musicSearchWord")
+  localStorage.removeItem("foodSearchWord")
 
   if (accessToken) {
     localStorage.setItem("access_token", accessToken)
@@ -100,9 +103,14 @@ function openEvent() {
   const storedMusic = localStorage.getItem("storedmusic")
   const storedFood = localStorage.getItem("storedfood")
   const storedDrinks = localStorage.getItem("storeddrinks")
-
+  console.log(storedFood)
   if (storedMusic && storedMusic.length > 0) {
+    musicList.innerHTML = ""
     displaySaved("music", JSON.parse(storedMusic))
+  }
+  if (storedFood && storedFood.length > 0) {
+    foodList.innerHTML = ""
+    displaySaved("food", JSON.parse(storedFood))
   }
 }
 

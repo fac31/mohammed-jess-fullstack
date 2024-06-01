@@ -3,13 +3,15 @@ const overlay = document.querySelector(".overlay")
 const modal = document.querySelector(".modal")
 
 // SPOTIFY SEARCH
-export async function handlePlaylistsSearch(searchWord) {
-  const playlists = await getPlaylists(searchWord)
-  if (searchWord) localStorage.setItem("musicSearchWord", searchWord)
+export async function handlePlaylistsSearch(musicSearchWord) {
+  const storedMusic = localStorage.getItem("musicSearchWord")
+  if (!musicSearchWord && storedMusic) return
+  const playlists = await getPlaylists(musicSearchWord)
+  if (musicSearchWord) localStorage.setItem("musicSearchWord", musicSearchWord)
   outputResults("music", playlists)
 }
 
-async function getPlaylists(searchWord) {
+async function getPlaylists(musicSearchWord) {
   const accessToken = localStorage.getItem("access_token")
 
   if (!accessToken) {
@@ -22,7 +24,7 @@ async function getPlaylists(searchWord) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ searchWord }),
+      body: JSON.stringify({ musicSearchWord }),
     })
 
     if (!response.ok) {
@@ -68,8 +70,6 @@ export async function viewPlaylistDetails(playlistName, playlistID) {
     }
 
     const playlistDetails = await response.json()
-    console.log("Playlist details:", playlistDetails)
-
     displayPlaylistDetails(playlistName, playlistDetails)
   } catch (error) {
     console.error("Error fetching playlist details:", error)
