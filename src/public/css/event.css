@@ -184,7 +184,8 @@
 }
 
 .music-results-container,
-.food-results-container {
+.food-results-container,
+.drinks-results-container {
   display: flex;
   gap: 2rem;
   overflow-x: auto;
@@ -192,7 +193,8 @@
 }
 
 .music-card,
-.food-card {
+.food-card,
+.drinks-card {
   height: 16rem;
   width: 16rem;
   min-width: 16rem;
@@ -210,8 +212,13 @@
   background: var(--lighter-green);
 }
 
+.drinks-card {
+  background: var(--light-green);
+}
+
 .music-card-head,
-.food-card-head {
+.food-card-head,
+.drinks-card-head {
   display: flex;
   align-items: center;
   height: 6rem;
@@ -219,7 +226,8 @@
 }
 
 .music-card-header,
-.food-card-header {
+.food-card-header,
+.drinks-card-header {
   font-family: var(--title);
   margin-top: 2rem;
   margin-bottom: 0;
@@ -231,14 +239,16 @@
 }
 
 .music-card-img,
-.food-card-img {
+.food-card-img,
+.drinks-card-img {
   height: 6rem;
   width: 6rem;
   border-top-left-radius: 16px;
   border-bottom-right-radius: 16px;
 }
 
-.food-card-img {
+.food-card-img,
+.drinks-card-img {
   filter: brightness(0.9);
 }
 
@@ -265,7 +275,8 @@
   background: var(--mid-green);
 }
 
-.song-container {
+.song-container,
+.drink-container {
   width: 100%;
   height: 100%;
   padding: 2rem;
@@ -276,6 +287,26 @@
     font-family: var(--title);
     color: var(--green);
   }
+  p {
+    text-align: center;
+    margin: 2rem 0;
+  }
+}
+
+.drink-ingredients-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 24rem;
+  margin: 0 auto;
+}
+.ingredient-item {
+  padding: 5px;
+  border-bottom: 1px solid #ddd;
+}
+.ingredient-measure {
+  padding: 5px;
+  border-bottom: 1px solid #ddd;
+  text-align: right;
 }
 
 @media (min-width: 800px) {
