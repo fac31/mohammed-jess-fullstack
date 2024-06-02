@@ -142,13 +142,21 @@
   right: 2rem;
 }
 
-.view-event-btn-save-container {
+.view-event-btn-save-form {
   position: absolute;
   bottom: 4rem;
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 2rem;
+  input {
+    all: unset;
+    border-bottom: 1px solid black;
+    text-align: center;
+    padding-bottom: 0.5rem;
+  }
 }
 
 .view-event-card-container {

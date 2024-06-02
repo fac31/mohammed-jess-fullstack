@@ -82,7 +82,7 @@ function eventSearch(e) {
   handleDrinksSearch(formData.drinks)
 }
 
-// GET TOKENS
+// GET API TOKENS
 document.addEventListener("DOMContentLoaded", async () => {
   const response = await fetch("/get-spotify-token")
   const data = await response.json()
@@ -126,4 +126,25 @@ function closeEvent() {
   setTimeout(() => {
     viewEventContainer.classList.add("hidden")
   }, 500)
+}
+
+// SAVE EVENT
+const saveInput = document.getElementById("event-name")
+const saveButton = document.querySelector(".view-event-btn-save")
+
+document.addEventListener("DOMContentLoaded", function () {
+  saveInput.addEventListener("input", function () {
+    if (saveInput.value.trim() !== "") {
+      saveButton.disabled = false
+    } else {
+      saveButton.disabled = true
+    }
+  })
+})
+
+saveButton.addEventListener("click", saveEvent)
+
+// NOTE - TO BE COMPLETED FOR SAVING EVENT
+function saveEvent(e) {
+  e.preventDefault()
 }
