@@ -30,22 +30,22 @@
           <p>Sorry, we are unable to log you in. Please check that both your username and password are correct.</p>
         </div>
         <div class="login-form" id="login-form">
-          <form action="/login" method="post">
-            <label for="email">Email</label>
-            <input type="email" name="email" id="emailField" required />
-            <label for="password">Password</label>
-            <input type="password" name="password" required />
+          <form action="/login" method="post" id="loginForm">
+            <label for="emailField">Email</label>
+            <input type="email" name="email" id="emailField" required placeholder="Enter Your Email" />
+            <label for="passwordField">Password</label>
+            <input type="password" name="password" id="passwordField" required placeholder="Enter Your Password" />
             <button type="submit" class="action-btn">Go!</button>
           </form>
         </div>
         <div id="signup-form" class="signup-form">
-          <form action="/register" method="post">
-            <label for="name">Name</label>
-            <input type="text" name="name" id="nameField2" required />
-            <label for="email">Email</label>
-            <input type="email" name="email" id="emailField2" required />
-            <label for="password">Password</label>
-            <input type="password" name="password" required />
+          <form action="/register" method="post" id="registerForm">
+            <label for="nameField2">Name</label>
+            <input type="text" name="name" id="nameField2" required placeholder="Enter Your Name" />
+            <label for="emailField2">Email</label>
+            <input type="email" name="email" id="emailField2" required placeholder="Enter Your Email" />
+            <label for="passwordF">Password</label>
+            <input type="password" name="password" id="passwordF" required placeholder="Enter Your Password" />
             <button type="submit" class="action-btn">Go!</button>
           </form>
         </div>
