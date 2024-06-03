@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 @import url('https://fonts.googleapis.com/css2?family=Sulphur+Point:wght@300;400;700&display=swap');
 /*font-family: "Sulphur Point", sans-serif;*/
 
@@ -151,4 +152,35 @@ nav {
     opacity: 1;
     transform: translateY(0);
   }
+=======
+h1 {
+    color: red;
+}
+
+.page-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form {
+    width: 35%;
+    margin-bottom: 50px;
+    color: black;
+}
+
+input[type='text'],
+input[type='email'],
+input[type='password'] {
+    box-sizing: border-box;
+    outline: none;
+    display: block;
+    width: 95%;
+    border: none;
+    border-bottom: 1.4px solid var(--bg-shade2-color);
+    background: transparent;
+    margin: 5px 0 35px 10px;
+    font-size: 14pt;
+    height: 24px;
+>>>>>>> Stashed changes
 }
