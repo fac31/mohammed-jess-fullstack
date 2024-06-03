@@ -1,5 +1,6 @@
 import { handlePlaylistsSearch } from "./event-music.js"
 import { handleRecipeSearch } from "./event-food.js"
+import { handleDrinksSearch } from "./event-drinks.js"
 import { displaySaved } from "./utils.js"
 const eventSearchBtn = document.querySelector(".event-form-btn-search")
 const eventSearchAgainBtn = document.querySelector(".event-search-again-btn")
@@ -12,6 +13,7 @@ const viewEventBtn = document.querySelector(".view-event-btn")
 const viewEventBtnClose = document.querySelector(".view-event-btn-close")
 const musicList = document.querySelector(".music-list")
 const foodList = document.querySelector(".food-list")
+const drinksList = document.querySelector(".drinks-list")
 
 eventSearchBtn.addEventListener("click", eventSearch)
 eventSearchAgainBtn.addEventListener("click", expandSearchBox)
@@ -77,9 +79,10 @@ function eventSearch(e) {
   hideSearchBox()
   handlePlaylistsSearch(formData.music)
   handleRecipeSearch(formData.food)
+  handleDrinksSearch(formData.drinks)
 }
 
-// GET TOKENS
+// GET API TOKENS
 document.addEventListener("DOMContentLoaded", async () => {
   const response = await fetch("/get-spotify-token")
   const data = await response.json()
@@ -103,7 +106,7 @@ function openEvent() {
   const storedMusic = localStorage.getItem("storedmusic")
   const storedFood = localStorage.getItem("storedfood")
   const storedDrinks = localStorage.getItem("storeddrinks")
-  console.log(storedFood)
+
   if (storedMusic && storedMusic.length > 0) {
     musicList.innerHTML = ""
     displaySaved("music", JSON.parse(storedMusic))
@@ -112,6 +115,10 @@ function openEvent() {
     foodList.innerHTML = ""
     displaySaved("food", JSON.parse(storedFood))
   }
+  if (storedDrinks && storedDrinks.length > 0) {
+    drinksList.innerHTML = ""
+    displaySaved("drinks", JSON.parse(storedDrinks))
+  }
 }
 
 function closeEvent() {
@@ -119,4 +126,25 @@ function closeEvent() {
   setTimeout(() => {
     viewEventContainer.classList.add("hidden")
   }, 500)
+}
+
+// SAVE EVENT
+const saveInput = document.getElementById("event-name")
+const saveButton = document.querySelector(".view-event-btn-save")
+
+document.addEventListener("DOMContentLoaded", function () {
+  saveInput.addEventListener("input", function () {
+    if (saveInput.value.trim() !== "") {
+      saveButton.disabled = false
+    } else {
+      saveButton.disabled = true
+    }
+  })
+})
+
+saveButton.addEventListener("click", saveEvent)
+
+// NOTE - TO BE COMPLETED FOR SAVING EVENT
+function saveEvent(e) {
+  e.preventDefault()
 }

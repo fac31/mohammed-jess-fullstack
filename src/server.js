@@ -70,7 +70,6 @@ app.get("/event", function (req, res) {
 
 app.post("/search", (req, res) => {
   const { music, food, drinks } = req.body
-  console.log("Form data:", { music, food, drinks })
   res.json({ music, food, drinks })
 })
 
@@ -208,3 +207,92 @@ const searchRecipes = async (keyword) => {
     return []
   }
 }
+
+// DRINKS
+app.post("/get-drinks", async (req, res) => {
+  const { drinksSearchWord } = req.body
+  const drinks = await searchDrinks(drinksSearchWord)
+  res.json({ drinks })
+})
+
+async function searchDrinksByName(keyword) {
+  const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${encodeURIComponent(keyword)}`
+  try {
+    const response = await fetch(url)
+    if (!response.ok) {
+      console.error(`Error fetching by name: ${response.statusText}`)
+      return []
+    }
+    const data = await response.json()
+    return data.drinks || []
+  } catch (error) {
+    console.error(`Error fetching by name: ${error.message}`)
+    return []
+  }
+}
+
+async function searchDrinksByIngredient(keyword) {
+  const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${encodeURIComponent(keyword)}`
+  try {
+    const response = await fetch(url)
+    if (!response.ok) {
+      console.error(`Error fetching by ingredient: ${response.statusText}`)
+      return []
+    }
+    const data = await response.json()
+    return data.drinks || []
+  } catch (error) {
+    console.error(`Error fetching by ingredient: ${error.message}`)
+    return []
+  }
+}
+
+async function searchDrinks(keyword) {
+  const resultsByName = await searchDrinksByName(keyword)
+  const resultsByIngredient = await searchDrinksByIngredient(keyword)
+
+  const drinks = [...new Set([...resultsByName, ...resultsByIngredient])]
+  return drinks
+}
+
+app.post("/get-drink-details", async (req, res) => {
+  try {
+    const { drinkID } = req.body
+
+    const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drinkID}`)
+    const data = await response.json()
+
+    if (data.drinks && data.drinks.length > 0) {
+      const drink = data.drinks[0]
+
+      const name = drink.strDrink
+      const instructions = drink.strInstructions
+      const glass = drink.strGlass
+      const imageURL = drink.strDrinkThumb
+
+      const ingredients = []
+      for (let i = 1; i <= 15; i++) {
+        const ingredient = drink[`strIngredient${i}`]
+        const measure = drink[`strMeasure${i}`]
+        if (ingredient && measure) {
+          ingredients.push({ ingredient, measure })
+        }
+      }
+
+      const drinkDetails = {
+        name,
+        instructions,
+        glass,
+        imageURL,
+        ingredients,
+      }
+
+      res.json(drinkDetails)
+    } else {
+      res.status(404).json({ error: "Drink not found" })
+    }
+  } catch (error) {
+    console.error("Error fetching drink details:", error)
+    res.status(500).json({ error: "Internal server error" })
+  }
+})
