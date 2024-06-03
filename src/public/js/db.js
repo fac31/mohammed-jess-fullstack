@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-const connect = mongoose.connect("mongodb://0.0.0.0:27017/login")
+const connect = mongoose.connect("mongodb://0.0.0.0:27017/curateDatabase")
 
 connect
   .then(() => {
@@ -9,7 +9,7 @@ connect
     console.log("DB cannot be Connected")
   })
 
-const loginSchema = new mongoose.Schema({
+const newUserSchema = new mongoose.Schema({
   name: {
     type: String,
     require: true,
@@ -24,6 +24,6 @@ const loginSchema = new mongoose.Schema({
   },
 })
 
-const collection = new mongoose.model("user", loginSchema)
+const collection = new mongoose.model("user", newUserSchema)
 
 module.exports = collection
