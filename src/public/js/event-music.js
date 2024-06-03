@@ -2,7 +2,7 @@ import { outputResults } from "./utils.js"
 const overlay = document.querySelector(".overlay")
 const modal = document.querySelector(".modal")
 
-// SPOTIFY SEARCH
+// --SPOTIFY SEARCH
 export async function handlePlaylistsSearch(searchWord) {
   const playlists = await getPlaylists(searchWord)
   if (searchWord) localStorage.setItem("musicSearchWord", searchWord)
