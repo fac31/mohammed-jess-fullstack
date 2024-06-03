@@ -44,6 +44,14 @@
         <h2 class="section-header">music</h2>
         <div class="music-results-container"></div>
       </div>
+      <div class="food-container section-container hidden">
+        <h2 class="section-header">food</h2>
+        <div class="food-results-container"></div>
+      </div>
+      <div class="drinks-container section-container hidden">
+        <h2 class="section-header">drinks</h2>
+        <div class="drinks-results-container"></div>
+      </div>
     </div>
     <div class="view-event-btn-container hidden">
       <button class="btn view-event-btn">view event</button>
@@ -57,16 +65,17 @@
         </div>
         <div class="view-event-card">
           <h2>food</h2>
-          <ul class="music-list event-list"></ul>
+          <ul class="food-list event-list"></ul>
         </div>
         <div class="view-event-card">
           <h2>drinks</h2>
-          <ul class="music-list event-list"></ul>
+          <ul class="drinks-list event-list"></ul>
         </div>
       </div>
-      <div class="view-event-btn-save-container">
+      <form class="view-event-btn-save-form">
+        <input type="text" name="event-name" id="event-name" autocomplete="false" placeholder="Enter event name..."/>
         <button class="btn view-event-btn-save">save event</button>
-      </div>
+      </form>
     </div>
     <div class="overlay hidden">
       <div class="modal"></div>

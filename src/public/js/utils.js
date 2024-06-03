@@ -1,28 +1,29 @@
-import {
-  addPlaylistToStorage,
-  removePlaylistFromStorage,
-  viewPlaylistDetails,
-} from "./event-music.js"
+import { addPlaylistToStorage, removePlaylistFromStorage, viewPlaylistDetails } from "./event-music.js"
+import { addRecipeToStorage, removeRecipeFromStorage } from "./event-food.js"
+import { addDrinkToStorage, removeDrinkFromStorage, getDrinkDetails } from "./event-drinks.js"
 
 export function outputResults(category, details) {
   const container = document.querySelector(`.${category}-container`)
-  const resultsContainer = document.querySelector(
-    `.${category}-results-container`
-  )
+  const resultsContainer = document.querySelector(`.${category}-results-container`)
   resultsContainer.innerHTML = ""
   const storedMusicSearchWord = localStorage.getItem("musicSearchWord")
+  const storedFoodSearchWord = localStorage.getItem("foodSearchWord")
+  const storedDrinksSearchWord = localStorage.getItem("drinksSearchWord")
 
-  if (storedMusicSearchWord) {
+  if (category === "music" && storedMusicSearchWord) {
     container.classList.remove("hidden")
-    container.classList.add("fade-in")
-    container.classList.add("visible")
+    container.classList.add("fade-in", "visible")
+  } else if (category === "food" && storedFoodSearchWord) {
+    container.classList.remove("hidden")
+    container.classList.add("fade-in", "visible")
+  } else if (category === "drinks") {
+    container.classList.remove("hidden")
+    container.classList.add("fade-in", "visible")
   }
 
   details.forEach((detail) => {
-    if (detail.name && !detail.name.toLowerCase().includes("undefined")) {
-      const newCard = createCard(category, detail)
-      resultsContainer.appendChild(newCard)
-    }
+    const newCard = createCard(category, detail)
+    resultsContainer.appendChild(newCard)
   })
 }
 
@@ -33,23 +34,32 @@ function createCard(category, card) {
   const cardButtonContainer = document.createElement("div")
   const addButton = document.createElement("button")
   const viewButton = document.createElement("button")
+  const cardImg = document.createElement("img")
 
-  cardHeader.textContent = card.name
-  viewButton.textContent = "more"
-
-  const storedItems =
-    JSON.parse(localStorage.getItem(`stored${category}`)) || []
+  const storedItems = JSON.parse(localStorage.getItem(`stored${category}`)) || []
   const isStored = storedItems.some((name) => name === card.name)
 
   if (isStored) {
-    addButton.textContent = "remove"
+    addButton.textContent = "cut"
   } else {
     addButton.textContent = "add"
   }
 
-  const cardImg = document.createElement("img")
-  if (card.images.length > 0) {
+  if (category === "food") {
+    viewButton.textContent = "view"
+  } else {
+    viewButton.textContent = "more"
+  }
+
+  if (category === "music" && card.images.length > 0) {
     cardImg.src = card.images[0].url
+    cardHeader.textContent = card.name
+  } else if (category === "food") {
+    cardImg.src = card.image
+    cardHeader.textContent = card.label
+  } else if (category === "drinks") {
+    cardImg.src = card.strDrinkThumb
+    cardHeader.textContent = card.strDrink
   } else {
     cardImg.alt = "No Image"
   }
@@ -79,9 +89,35 @@ function createCard(category, card) {
         removePlaylistFromStorage(card.name)
       }
     })
-    viewButton.addEventListener("click", () =>
-      viewPlaylistDetails(card.name, card.id)
-    )
+    viewButton.addEventListener("click", () => viewPlaylistDetails(card.name, card.id))
+  }
+
+  if (category === "food") {
+    addButton.addEventListener("click", () => {
+      if (addButton.textContent === "add") {
+        addButton.textContent = "cut"
+        addRecipeToStorage(card.label)
+      } else {
+        addButton.textContent = "add"
+        removeRecipeFromStorage(card.label)
+      }
+    })
+    viewButton.addEventListener("click", () => {
+      window.open(card.url, "_blank")
+    })
+  }
+
+  if (category === "drinks") {
+    addButton.addEventListener("click", () => {
+      if (addButton.textContent === "add") {
+        addButton.textContent = "cut"
+        addDrinkToStorage(card.strDrink)
+      } else {
+        addButton.textContent = "add"
+        removeDrinkFromStorage(card.strDrink)
+      }
+    })
+    viewButton.addEventListener("click", () => getDrinkDetails(card.idDrink))
   }
 
   return cardContainer
