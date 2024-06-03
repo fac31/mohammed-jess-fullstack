@@ -8,6 +8,7 @@ export async function handlePlaylistsSearch(musicSearchWord) {
   if (!musicSearchWord && storedMusic) return
   const playlists = await getPlaylists(musicSearchWord)
   if (musicSearchWord) localStorage.setItem("musicSearchWord", musicSearchWord)
+
   outputResults("music", playlists)
 }
 
