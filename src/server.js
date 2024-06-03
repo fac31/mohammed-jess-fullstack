@@ -21,7 +21,6 @@ app.get("/", function (req, res) {
 })
 
 //------------------------Register a user----------------------------------
-
 // Serve the event page
 app.get("/event", (req, res) => {
   res.sendFile(path.join(__dirname, "public/html/event.html"))
