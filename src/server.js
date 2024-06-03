@@ -64,7 +64,6 @@ app.post("/login", upload.none(), async (req, res) => {
 })
 //---------------------------------------------------------------------------
 
-
 app.get("/event", function (req, res) {
   res.sendFile(path.join(__dirname, "public/html/event.html"))
 })
