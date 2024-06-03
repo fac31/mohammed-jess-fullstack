@@ -4,6 +4,7 @@ const path = require("path")
 const bodyParser = require("body-parser")
 const collection = require("../src/public/js/db")
 const fetch = require("node-fetch")
+const multer = require("multer")
 require("dotenv").config()
 const spotifyID = process.env.SPOTIFY_ID
 const spotifyKey = process.env.SPOTIFY_KEY
@@ -11,6 +12,7 @@ const edamamID = process.env.EDAMAM_ID
 const edamamKey = process.env.EDAMAM_KEY
 
 app.use(express.static(path.join(__dirname, "public")))
+const upload = multer()
 
 // J
 app.use(express.urlencoded({ extended: false }))
