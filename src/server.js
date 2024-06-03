@@ -4,14 +4,12 @@ const path = require("path")
 const bodyParser = require("body-parser")
 const collection = require("../src/public/js/db")
 const fetch = require("node-fetch")
-const multer = require("multer")
 require("dotenv").config()
 const spotifyID = process.env.SPOTIFY_ID
 const spotifyKey = process.env.SPOTIFY_KEY
 
 app.use(express.static(path.join(__dirname, "public")))
 
-const upload = multer()
 // J
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
@@ -21,26 +19,21 @@ app.get("/", function (req, res) {
 })
 
 //------------------------Register a user----------------------------------
-
-// Serve the event page
-app.get("/event", (req, res) => {
-  res.sendFile(path.join(__dirname, "public/html/event.html"))
-})
-
-app.post("/register", upload.none(), async (req, res) => {
+app.post("/register", async (req, res) => {
   const data = {
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
   }
+
   // Check if the username exists in the database
-  const existingUser = await collection.findOne({ email: data.email })
+  const existingUser = await collection.findOne({ name: data.name })
   if (existingUser) {
-    res.send(`An account with Email ${data.email} already exists`)
+    res.send("User name already exists. Please choose a different name.")
   } else {
     try {
       const userData = await collection.insertMany(data)
-      res.send("You've successfully registered. You can now login.")
+      res.send("User registered successfully!")
     } catch (error) {
       console.error(error)
       res.send("Error inserting data")
@@ -49,16 +42,22 @@ app.post("/register", upload.none(), async (req, res) => {
 })
 //---------------------------------------------------------------------------
 //-----------------------------Login user------------------------------------
-app.post("/login", upload.none(), async (req, res) => {
+app.post("/login", async (req, res) => {
   try {
-    const check = await collection.findOne({ email: req.body.email, password: req.body.password })
+    const check = await collection.findOne({ email: req.body.email })
+
     if (!check) {
-      return res.status(401).send("Oops! Incorrect email or password")
+      return res.status(401).send("User not found")
     }
-    console.log("Login successfully")
-    res.sendFile(path.join(__dirname, "public/html/event.html"))
+
+    if (check.password === req.body.password) {
+      console.log("Login successfully")
+      res.sendFile(path.join(__dirname, "public/html/event.html"))
+    } else {
+      res.send("Wrong password")
+    }
   } catch (error) {
-    res.send("Error checking login credentials!")
+    res.send("Wrong details!")
   }
 })
 //---------------------------------------------------------------------------
