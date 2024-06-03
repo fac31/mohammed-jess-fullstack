@@ -21,21 +21,25 @@ app.get("/", function (req, res) {
 })
 
 //------------------------Register a user----------------------------------
-app.post("/register", async (req, res) => {
+// Serve the event page
+app.get("/event", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/html/event.html"))
+})
+
+app.post("/register", upload.none(), async (req, res) => {
   const data = {
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
   }
-
   // Check if the username exists in the database
-  const existingUser = await collection.findOne({ name: data.name })
+  const existingUser = await collection.findOne({ email: data.email })
   if (existingUser) {
-    res.send("User name already exists. Please choose a different name.")
+    res.send(`An account with Email ${data.email} already exists`)
   } else {
     try {
       const userData = await collection.insertMany(data)
-      res.send("User registered successfully!")
+      res.send("You've successfully registered. You can now login.")
     } catch (error) {
       console.error(error)
       res.send("Error inserting data")
@@ -44,25 +48,20 @@ app.post("/register", async (req, res) => {
 })
 //---------------------------------------------------------------------------
 //-----------------------------Login user------------------------------------
-app.post("/login", async (req, res) => {
+app.post("/login", upload.none(), async (req, res) => {
   try {
-    const check = await collection.findOne({ name: req.body.name })
-
+    const check = await collection.findOne({ email: req.body.email, password: req.body.password })
     if (!check) {
-      return res.status(401).send("User not found")
+      return res.status(401).send("Oops! Incorrect email or password")
     }
-
-    if (check.password === req.body.password) {
-      console.log("Login successfully")
-      res.sendFile(path.join(__dirname, "public/html/event.html"))
-    } else {
-      res.send("Wrong password")
-    }
+    console.log("Login successfully")
+    res.sendFile(path.join(__dirname, "public/html/event.html"))
   } catch (error) {
-    res.send("Wrong details!")
+    res.send("Error checking login credentials!")
   }
 })
 //---------------------------------------------------------------------------
+
 
 app.get("/event", function (req, res) {
   res.sendFile(path.join(__dirname, "public/html/event.html"))
