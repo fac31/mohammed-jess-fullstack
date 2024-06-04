@@ -41,7 +41,8 @@ app.post("/register", upload.none(), async (req, res) => {
   } else {
     try {
       const userData = await collection.insertMany(data)
-      res.send("You've successfully registered. You can now login.")
+      res.redirect("/event")
+      console.log("You've successfully registered.")
     } catch (error) {
       console.error(error)
       res.send("Error inserting data")
@@ -57,7 +58,7 @@ app.post("/login", upload.none(), async (req, res) => {
       return res.status(401).send("Oops! Incorrect email or password")
     }
     console.log("Login successfully")
-    res.sendFile(path.join(__dirname, "public/html/event.html"))
+    res.redirect("/event")
   } catch (error) {
     res.send("Error checking login credentials!")
   }
