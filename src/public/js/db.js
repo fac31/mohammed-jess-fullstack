@@ -26,4 +26,24 @@ const newUserSchema = new mongoose.Schema({
 
 const collection = new mongoose.model("user", newUserSchema)
 
-module.exports = collection
+const profileSchema = new mongoose.Schema({
+  eventName: {
+    type: String,
+    require: true,
+  },
+  music: {
+    type: String,
+    require: true,
+  },
+  food: {
+    type: String,
+    require: true,
+  },
+  drink: {
+    type: String,
+    require: true,
+  },
+})
+const profilecollection = new mongoose.model("profile", profileSchema)
+
+module.exports = { collection, profilecollection }

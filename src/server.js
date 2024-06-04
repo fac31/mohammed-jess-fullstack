@@ -2,7 +2,7 @@ const express = require("express")
 const app = express()
 const path = require("path")
 const bodyParser = require("body-parser")
-const collection = require("../src/public/js/db")
+const { collection, profilecollection } = require("../src/public/js/db")
 const fetch = require("node-fetch")
 const multer = require("multer")
 require("dotenv").config()
@@ -295,5 +295,23 @@ app.post("/get-drink-details", async (req, res) => {
   } catch (error) {
     console.error("Error fetching drink details:", error)
     res.status(500).json({ error: "Internal server error" })
+  }
+})
+
+//------------------Save from localstorage to the database--------------------
+app.use(express.json())
+app.post("/save-data", async (req, res) => {
+  const data = {
+    eventName: req.body.data.profileName,
+    music: req.body.data.music,
+    food: req.body.data.food,
+    drink: req.body.data.drinks,
+  }
+  try {
+    const userData = await profilecollection.insertMany(data)
+    console.log("Your event has been registered.")
+  } catch (error) {
+    console.error(error)
+    res.send("Error inserting data")
   }
 })

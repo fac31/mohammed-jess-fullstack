@@ -18,6 +18,11 @@ const drinksList = document.querySelector(".drinks-list")
 eventSearchBtn.addEventListener("click", eventSearch)
 eventSearchAgainBtn.addEventListener("click", expandSearchBox)
 
+// Retrieve data from local storage
+const storedMusic = localStorage.getItem("storedmusic")
+const storedFood = localStorage.getItem("storedfood")
+const storedDrinks = localStorage.getItem("storeddrinks")
+
 // HIDE AND EXPAND SEARCH BOX
 function hideSearchBox() {
   const form = document.querySelector(".event-search-form")
@@ -103,10 +108,6 @@ function openEvent() {
   viewEventContainer.classList.remove("hidden")
   viewEventContainer.classList.remove("slide-out-diagonal")
 
-  const storedMusic = localStorage.getItem("storedmusic")
-  const storedFood = localStorage.getItem("storedfood")
-  const storedDrinks = localStorage.getItem("storeddrinks")
-
   if (storedMusic && storedMusic.length > 0) {
     musicList.innerHTML = ""
     displaySaved("music", JSON.parse(storedMusic))
@@ -147,4 +148,28 @@ saveButton.addEventListener("click", saveEvent)
 // NOTE - TO BE COMPLETED FOR SAVING EVENT
 function saveEvent(e) {
   e.preventDefault()
+  const data = {
+    profileName: saveInput.value,
+    music: storedMusic,
+    food: storedFood,
+    drinks: storedDrinks,
+  }
+
+  // Send data to the server
+  fetch("http://localhost:4000/save-data", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ data }),
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      console.log("Success:", result)
+    })
+    .catch((error) => {
+      console.error("Error:", error)
+    })
+
+  console.log("Data = " + storedFood + "  " + data.profileName)
 }
