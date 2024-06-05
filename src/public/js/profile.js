@@ -96,3 +96,4 @@ const homeIcon = document.querySelector(".home-icon")
 homeIcon.addEventListener("click", function () {
   window.location.href = `/event`
 })
+

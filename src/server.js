@@ -59,6 +59,7 @@ app.post("/login", upload.none(), async (req, res) => {
     }
 
     const userId = check._id.toString()
+    console.log("UserID" + userId)
     res.status(200).json({ userId, redirectUrl: "/event" })
   } catch (error) {
     res.send("Error checking login credentials!")

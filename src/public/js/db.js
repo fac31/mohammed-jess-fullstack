@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const Schema = mongoose.Schema
 const connect = mongoose.connect("mongodb://0.0.0.0:27017/curateDatabase")
 
 connect
@@ -44,8 +45,8 @@ const profileSchema = new mongoose.Schema({
     require: true,
   },
   user: {
-    type: String,
-    require: true,
+    type: Schema.Types.ObjectId,
+    ref: "user",
   },
 })
 const profilecollection = new mongoose.model("profile", profileSchema)
