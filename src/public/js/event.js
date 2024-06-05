@@ -169,12 +169,14 @@ function saveEvent(e) {
     .then((result) => {
       console.log("Success:", result)
       window.location.href = `/profile/${storedUser}`
-      localStorage.removeItem("storeddrinks")
-      localStorage.removeItem("storedmusic")
-      localStorage.removeItem("storedfood")
-      localStorage.removeItem("drinksSearchWord")
-      localStorage.removeItem("musicSearchWord")
-      localStorage.removeItem("foodSearchWord")
+      localStorage.removeItem(
+        "storeddrinks",
+        "storedmusic",
+        "storedfood",
+        "drinksSearchWord",
+        "musicSearchWord",
+        "foodSearchWord"
+      )
     })
     .catch((error) => {
       console.error("Error:", error)
@@ -186,10 +188,9 @@ const navProfileBtn = document.querySelector(".nav-profile-btn")
 const homeIcon = document.querySelector(".home-icon")
 
 navProfileBtn.addEventListener("click", function () {
-  const userId = localStorage.getItem("userId")
-  window.location.href = `/profile/${userId}`
+  window.location.href = "/profile"
 })
 
 homeIcon.addEventListener("click", function () {
-  window.location.href = `/event`
+  window.location.href = "/event"
 })

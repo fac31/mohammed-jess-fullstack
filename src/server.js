@@ -59,6 +59,7 @@ app.post("/login", upload.none(), async (req, res) => {
     }
 
     const userId = check._id.toString()
+    console.log("UserID" + userId)
     res.status(200).json({ userId, redirectUrl: "/event" })
   } catch (error) {
     res.send("Error checking login credentials!")
@@ -319,11 +320,28 @@ app.post("/save-data", async (req, res) => {
   }
 })
 
-// PROFILE PAGE
-app.get("/profile/:userId", async function (req, res) {
+// -------------PROFILE PAGE-------------------------------
+/*app.get("/profile/:userId", async function (req, res) {
   const userId = req.params.userId
   try {
     const events = await profilecollection.find({ user: userId })
+    res.json(events)
+  } catch (error) {
+    console.error("Error retrieving events:", error)
+    res.status(500).send("Error retrieving events")
+  }
+})*/
+
+app.get("/profile", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/html/profile.html"))
+})
+app.get("/profile/:userId", async (req, res) => {
+  const userId = req.params.userId
+  try {
+    const events = await profilecollection.find({ user: userId }).populate("user")
+    if (events.length === 0) {
+      return res.status(404).send("No events found for this user")
+    }
     res.json(events)
   } catch (error) {
     console.error("Error retrieving events:", error)
