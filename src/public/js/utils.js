@@ -125,6 +125,7 @@ function createCard(category, card) {
 
 export function displaySaved(category, list) {
   const listContainer = document.querySelector(`.${category}-list`)
+  listContainer.innerHTML = ""
   list.forEach((item) => {
     const listElement = document.createElement("li")
     listElement.textContent = item

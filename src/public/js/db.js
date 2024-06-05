@@ -43,6 +43,10 @@ const profileSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  user: {
+    type: String,
+    require: true,
+  },
 })
 const profilecollection = new mongoose.model("profile", profileSchema)
 

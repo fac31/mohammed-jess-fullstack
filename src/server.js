@@ -14,20 +14,20 @@ const edamamKey = process.env.EDAMAM_KEY
 app.use(express.static(path.join(__dirname, "public")))
 const upload = multer()
 
-// J
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
+// Serve the home page
 app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname, "public/html/index.html"))
 })
 
-//------------------------Register a user----------------------------------
 // Serve the event page
 app.get("/event", (req, res) => {
   res.sendFile(path.join(__dirname, "public/html/event.html"))
 })
 
+//------------------------Register a user----------------------------------
 app.post("/register", upload.none(), async (req, res) => {
   const data = {
     name: req.body.name,
@@ -37,12 +37,12 @@ app.post("/register", upload.none(), async (req, res) => {
   // Check if the username exists in the database
   const existingUser = await collection.findOne({ email: data.email })
   if (existingUser) {
-    res.send(`An account with Email ${data.email} already exists`)
+    return res.status(401).send(`An account with Email ${data.email} already exists`)
   } else {
     try {
-      const userData = await collection.insertMany(data)
-      res.redirect("/event")
-      console.log("You've successfully registered.")
+      const result = await collection.create(data)
+      const userId = result._id.toString()
+      res.status(200).json({ userId, redirectUrl: "/event" })
     } catch (error) {
       console.error(error)
       res.send("Error inserting data")
@@ -57,8 +57,9 @@ app.post("/login", upload.none(), async (req, res) => {
     if (!check) {
       return res.status(401).send("Oops! Incorrect email or password")
     }
-    console.log("Login successfully")
-    res.redirect("/event")
+
+    const userId = check._id.toString()
+    res.status(200).json({ userId, redirectUrl: "/event" })
   } catch (error) {
     res.send("Error checking login credentials!")
   }
@@ -306,12 +307,26 @@ app.post("/save-data", async (req, res) => {
     music: req.body.data.music,
     food: req.body.data.food,
     drink: req.body.data.drinks,
+    user: req.body.data.user,
   }
   try {
     const userData = await profilecollection.insertMany(data)
     console.log("Your event has been registered.")
+    res.json({ success: true })
   } catch (error) {
     console.error(error)
-    res.send("Error inserting data")
+    res.status(500).json({ success: false, error: "Error inserting data" })
+  }
+})
+
+// PROFILE PAGE
+app.get("/profile/:userId", async function (req, res) {
+  const userId = req.params.userId
+  try {
+    const events = await profilecollection.find({ user: userId })
+    res.json(events)
+  } catch (error) {
+    console.error("Error retrieving events:", error)
+    res.status(500).send("Error retrieving events")
   }
 })
