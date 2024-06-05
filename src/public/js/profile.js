@@ -1,40 +1,99 @@
 // NAV
-const navProfileBtn = document.querySelector(".nav-profile-btn")
+document.addEventListener("DOMContentLoaded", () => {
+  const navProfileBtn = document.querySelector(".nav-profile-btn")
+
+  navProfileBtn.addEventListener("click", function () {
+    const userId = localStorage.getItem("userId")
+    if (userId) {
+      window.location.href = `/profile/${userId}`
+    } else {
+      console.error("User ID not found in localStorage")
+    }
+  })
+
+  // Fetch and display user events if on profile page
+  const profilePageMatch = window.location.pathname.match(/\/profile\/(.+)/)
+  if (profilePageMatch) {
+    const userId = profilePageMatch[1]
+    fetchUserEvents(userId)
+  }
+})
+
+async function fetchUserEvents(userId) {
+  try {
+    const response = await fetch(`/profile/${userId}/events`)
+    if (!response.ok) {
+      throw new Error("Failed to fetch events")
+    }
+    const eventsData = await response.json()
+    renderEventCards(eventsData)
+  } catch (error) {
+    console.error("Error:", error.message)
+  }
+}
+
+function renderEventCards(events) {
+  const eventsListContainer = document.querySelector("#events-list-container")
+  eventsListContainer.innerHTML = "" // Clear existing events
+
+  events.forEach((event) => {
+    const eventCard = document.createElement("div")
+    eventCard.classList.add("event-card")
+
+    const eventName = document.createElement("h2")
+    eventName.textContent = event.eventName
+    eventCard.appendChild(eventName)
+
+    if (event.music) {
+      const musicHeader = document.createElement("h3")
+      musicHeader.textContent = "Music:"
+      eventCard.appendChild(musicHeader)
+
+      const musicList = document.createElement("ul")
+      JSON.parse(event.music).forEach((musicItem) => {
+        const musicListItem = document.createElement("li")
+        musicListItem.textContent = musicItem
+        musicList.appendChild(musicListItem)
+      })
+      eventCard.appendChild(musicList)
+    }
+
+    if (event.food) {
+      const foodHeader = document.createElement("h3")
+      foodHeader.textContent = "Food:"
+      eventCard.appendChild(foodHeader)
+
+      const foodList = document.createElement("ul")
+      JSON.parse(event.food).forEach((foodItem) => {
+        const foodListItem = document.createElement("li")
+        foodListItem.textContent = foodItem
+        foodList.appendChild(foodListItem)
+      })
+      eventCard.appendChild(foodList)
+    }
+
+    if (event.drink) {
+      const drinksHeader = document.createElement("h3")
+      drinksHeader.textContent = "Drinks:"
+      eventCard.appendChild(drinksHeader)
+
+      const drinksList = document.createElement("ul")
+      JSON.parse(event.drink).forEach((drinkItem) => {
+        const drinksListItem = document.createElement("li")
+        drinksListItem.textContent = drinkItem
+        drinksList.appendChild(drinksListItem)
+      })
+      eventCard.appendChild(drinksList)
+    }
+
+    eventsListContainer.appendChild(eventCard)
+  })
+}
+
+// NAV
 const homeIcon = document.querySelector(".home-icon")
 
 homeIcon.addEventListener("click", function () {
   window.location.href = `/event`
 })
 
-//----------------------------------------Function to fetch events data---------------------
-function fetchEvents() {
-  const userId = localStorage.getItem("userId")
-
-  fetch(`/profile/${userId}`)
-    .then((response) => response.json())
-    .then((events) => {
-      if (events.length === 0) {
-        document.body.innerHTML = "<h1>No events found for this user</h1>"
-        return
-      }
-
-      const userName = events[0].user.name
-      document.getElementById("user-name").innerText = userName
-      const eventsList = document.getElementById("events-list")
-      console.log(events)
-      events.forEach((event) => {
-        const listItem = document.createElement("li")
-        listItem.innerHTML = `<strong>Event Name:</strong> ${event.eventName} <br> 
-        <strong>Music:</strong> ${event.music ? event.music : "Not specified"} <br> 
-        <strong>Food:</strong> ${event.food ? event.food : "Not specified"} <br> 
-        <strong>Drinks:</strong> ${event.drink ? event.drink : "Not specified"} <br>`
-        eventsList.appendChild(listItem)
-      })
-    })
-    .catch((error) => {
-      console.error("Error fetching events:", error)
-    })
-}
-
-// Call fetchEvents function when the page loads
-window.addEventListener("load", fetchEvents)

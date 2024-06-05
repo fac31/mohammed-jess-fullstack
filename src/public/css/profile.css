@@ -3,4 +3,54 @@
   font-size: 3rem;
   color: var(--green);
   text-align: center;
+  margin-bottom: 4rem;
+}
+
+#events-list-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: 0 auto;
+  max-width: 90%;
+  gap: 2rem;
+}
+
+.event-card {
+  border: 1px dashed var(--green);
+  border-radius: 16px;
+  padding: 2rem 1rem;
+  background-color: var(--lightest-green);
+  max-width: 24rem;
+}
+
+.event-card h2 {
+  margin-top: 0;
+  text-align: center;
+  color: var(--green);
+  font-family: var(--title);
+}
+
+.event-card h3 {
+  margin-bottom: 5px;
+}
+
+.event-card ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.event-card ul li {
+  margin-bottom: 5px;
+}
+
+@media (min-width: 800px) {
+  #events-list-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1000px) {
+  #events-list-container {
+    grid-template-columns: 1fr 1fr 1fr;
+    max-width: 80%;
+  }
 }

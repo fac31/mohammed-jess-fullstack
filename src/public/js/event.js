@@ -185,12 +185,8 @@ function saveEvent(e) {
 
 // NAV
 const navProfileBtn = document.querySelector(".nav-profile-btn")
-const homeIcon = document.querySelector(".home-icon")
 
 navProfileBtn.addEventListener("click", function () {
   window.location.href = "/profile"
 })
 
-homeIcon.addEventListener("click", function () {
-  window.location.href = "/event"
-})
