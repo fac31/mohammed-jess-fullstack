@@ -320,7 +320,11 @@ app.post("/save-data", async (req, res) => {
 })
 
 // PROFILE PAGE
-app.get("/profile/:userId", async function (req, res) {
+app.get("/profile/:userId", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/html/profile.html"))
+})
+
+app.get("/profile/:userId/events", async (req, res) => {
   const userId = req.params.userId
   try {
     const events = await profilecollection.find({ user: userId })

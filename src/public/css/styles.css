@@ -54,6 +54,10 @@ nav {
   color: var(--pink);
 }
 
+.home-icon {
+  cursor: pointer;
+}
+
 .nav-profile-btn {
   /* all: unset;
   font-family: var(--title); */
