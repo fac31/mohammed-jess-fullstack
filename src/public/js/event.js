@@ -11,17 +11,15 @@ const viewEventContainer = document.querySelector(".view-event-container")
 const viewEventBtnContainer = document.querySelector(".view-event-btn-container")
 const viewEventBtn = document.querySelector(".view-event-btn")
 const viewEventBtnClose = document.querySelector(".view-event-btn-close")
-const musicList = document.querySelector(".music-list")
-const foodList = document.querySelector(".food-list")
-const drinksList = document.querySelector(".drinks-list")
 
 eventSearchBtn.addEventListener("click", eventSearch)
 eventSearchAgainBtn.addEventListener("click", expandSearchBox)
 
 // Retrieve data from local storage
-const storedMusic = localStorage.getItem("storedmusic")
-const storedFood = localStorage.getItem("storedfood")
-const storedDrinks = localStorage.getItem("storeddrinks")
+let storedMusic = localStorage.getItem("storedmusic")
+let storedFood = localStorage.getItem("storedfood")
+let storedDrinks = localStorage.getItem("storeddrinks")
+const storedUser = localStorage.getItem("userId")
 
 // HIDE AND EXPAND SEARCH BOX
 function hideSearchBox() {
@@ -108,16 +106,21 @@ function openEvent() {
   viewEventContainer.classList.remove("hidden")
   viewEventContainer.classList.remove("slide-out-diagonal")
 
+  function retrieveLatestData() {
+    storedMusic = localStorage.getItem("storedmusic")
+    storedFood = localStorage.getItem("storedfood")
+    storedDrinks = localStorage.getItem("storeddrinks")
+  }
+
+  retrieveLatestData()
+
   if (storedMusic && storedMusic.length > 0) {
-    musicList.innerHTML = ""
     displaySaved("music", JSON.parse(storedMusic))
   }
   if (storedFood && storedFood.length > 0) {
-    foodList.innerHTML = ""
     displaySaved("food", JSON.parse(storedFood))
   }
   if (storedDrinks && storedDrinks.length > 0) {
-    drinksList.innerHTML = ""
     displaySaved("drinks", JSON.parse(storedDrinks))
   }
 }
@@ -133,15 +136,13 @@ function closeEvent() {
 const saveInput = document.getElementById("event-name")
 const saveButton = document.querySelector(".view-event-btn-save")
 
-document.addEventListener("DOMContentLoaded", function () {
-  saveInput.addEventListener("input", function () {
-    if (saveInput.value.trim() !== "") {
-      saveButton.disabled = false
-    } else {
-      saveButton.disabled = true
-    }
-  })
-})
+// document.addEventListener("DOMContentLoaded", function () {
+//   saveButton.addEventListener("click", function () {
+//     if (saveInput.value.trim() !== "") {
+//       saveButton.disabled = false
+//     }
+//   })
+// })
 
 saveButton.addEventListener("click", saveEvent)
 
@@ -153,10 +154,11 @@ function saveEvent(e) {
     music: storedMusic,
     food: storedFood,
     drinks: storedDrinks,
+    user: storedUser,
   }
 
   // Send data to the server
-  fetch("http://localhost:4000/save-data", {
+  fetch("/save-data", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -166,10 +168,28 @@ function saveEvent(e) {
     .then((response) => response.json())
     .then((result) => {
       console.log("Success:", result)
+      window.location.href = `/profile/${storedUser}`
+      localStorage.removeItem("storeddrinks")
+      localStorage.removeItem("storedmusic")
+      localStorage.removeItem("storedfood")
+      localStorage.removeItem("drinksSearchWord")
+      localStorage.removeItem("musicSearchWord")
+      localStorage.removeItem("foodSearchWord")
     })
     .catch((error) => {
       console.error("Error:", error)
     })
-
-  console.log("Data = " + storedFood + "  " + data.profileName)
 }
+
+// NAV
+const navProfileBtn = document.querySelector(".nav-profile-btn")
+const homeIcon = document.querySelector(".home-icon")
+
+navProfileBtn.addEventListener("click", function () {
+  const userId = localStorage.getItem("userId")
+  window.location.href = `/profile/${userId}`
+})
+
+homeIcon.addEventListener("click", function () {
+  window.location.href = `/event`
+})

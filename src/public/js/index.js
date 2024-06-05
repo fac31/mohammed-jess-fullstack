@@ -7,11 +7,11 @@ const waveSectionTop = document.querySelector(".wave-section-top")
 const waveSectionBtm = document.querySelector(".wave-section-btm")
 const sloganTxt = document.querySelector(".slogan-text")
 const actionBtn = document.querySelector(".start-btn")
-const loginMessage = document.querySelector(".login-message")
-const loginMessageText = document.querySelector(".login-message p")
 const showLoginLink = document.getElementById("show-login")
 const logForm = document.getElementById("login-form")
 const signupForm = document.getElementById("signup-form")
+const logFormData = document.getElementById("login-form-data")
+const signupFormData = document.getElementById("signup-form-data")
 const links = document.querySelectorAll(".link")
 
 startBtn.addEventListener("click", transformPage)
@@ -48,56 +48,113 @@ links.forEach((link) => {
 logForm.classList.remove("hidden")
 signupForm.classList.add("hidden")
 
-const emailField = document.getElementById("emailField")
-const passwordField = document.getElementById("passwordField")
-
-function showFormMessage(message) {
-  loginMessage.classList.add("visible")
-  loginMessageText.innerText = message
-}
-
 document.addEventListener("DOMContentLoaded", () => {
-  const registerForm = document.getElementById("registerForm")
-  const loginForm = document.getElementById("loginForm")
+  const signupForm = document.querySelector("#signup-form form")
+  const loginForm = document.querySelector("#login-form form")
+  const loginMessage = document.querySelector(".login-message")
+  const loginMessageText = document.querySelector(".login-message-text")
 
-  if (registerForm) {
-    registerForm.addEventListener("submit", function (event) {
+  function showFormMessage(message) {
+    loginMessage.classList.remove("hidden")
+    loginMessageText.innerText = message
+  }
+
+  function saveUserIdToLocalStorage(userId) {
+    localStorage.setItem("userId", userId)
+  }
+
+  if (signupForm) {
+    signupForm.addEventListener("submit", async function (event) {
       event.preventDefault()
-      const formData = new FormData(registerForm)
-      fetch("/register", {
-        method: "POST",
-        body: formData,
-      })
-        .then((response) => response.text())
-        .then((message) => {
+      const formData = new FormData(signupFormData)
+      try {
+        const response = await fetch("/register", {
+          method: "POST",
+          body: formData,
+        })
+
+        if (response.ok) {
+          const { userId, redirectUrl } = await response.json()
+          saveUserIdToLocalStorage(userId)
+          window.location.href = redirectUrl
+        } else {
+          const message = await response.text()
           showFormMessage(message)
-        })
-        .catch((error) => {
-          showFormMessage("An error occurred: " + error.message)
-        })
+        }
+      } catch (error) {
+        showFormMessage("An error occurred: " + error.message)
+      }
     })
   }
 
   if (loginForm) {
-    loginForm.addEventListener("submit", function (event) {
+    loginForm.addEventListener("submit", async function (event) {
       event.preventDefault()
       const formData = new FormData(loginForm)
-      fetch("/login", {
-        method: "POST",
-        body: formData,
-      })
-        .then((response) => {
-          if (response.ok) {
-            window.location.href = "/event"
-          } else {
-            return response.text().then((message) => {
-              showFormMessage(message)
-            })
-          }
+      try {
+        const response = await fetch("/login", {
+          method: "POST",
+          body: formData,
         })
-        .catch((error) => {
-          showFormMessage("An error occurred: " + error.message)
-        })
+
+        console.log(response)
+
+        if (response.ok) {
+          const { userId, redirectUrl } = await response.json()
+          console.log(userId, redirectUrl)
+          saveUserIdToLocalStorage(userId)
+          window.location.href = redirectUrl
+        } else {
+          const message = await response.text()
+          console.log(message)
+          showFormMessage(message)
+        }
+      } catch (error) {
+        showFormMessage("An error occurred: " + error.message)
+      }
     })
   }
 })
+
+// document.addEventListener("DOMContentLoaded", () => {
+//   if (signupForm) {
+//     signupForm.addEventListener("submit", function (event) {
+//       event.preventDefault()
+//       const formData = new FormData(signupFormData)
+//       fetch("/register", {
+//         method: "POST",
+//         body: formData,
+//       })
+//         .then((response) => response.text())
+//         .then((message) => {
+//           showFormMessage(message)
+//         })
+//         .catch((error) => {
+//           showFormMessage("An error occurred: " + error.message)
+//         })
+//     })
+//   }
+
+//   if (logForm) {
+//     logForm.addEventListener("submit", function (event) {
+//       event.preventDefault()
+//       const formData = new FormData(logFormData)
+//       fetch("/login", {
+//         method: "POST",
+//         body: formData,
+//       })
+//         .then((response) => {
+//           if (response.ok) {
+//             window.location.href = "/event"
+//           } else {
+//             return response.text().then((message) => {
+//               showFormMessage(message)
+//             })
+//           }
+//         })
+//         .catch((error) => {
+//           showFormMessage("An error occurred: " + error.message)
+//         })
+//     })
+//   }
+// })

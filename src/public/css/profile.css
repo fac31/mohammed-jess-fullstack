@@ -1,0 +1,6 @@
+.profile-main-header {
+  font-family: var(--title);
+  font-size: 3rem;
+  color: var(--green);
+  text-align: center;
+}
