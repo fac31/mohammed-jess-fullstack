@@ -168,7 +168,7 @@ function saveEvent(e) {
     .then((response) => response.json())
     .then((result) => {
       console.log("Success:", result)
-      window.location.href = `/profile/${storedUser}`
+      alert("You event has been saved")
       localStorage.removeItem(
         "storeddrinks",
         "storedmusic",
